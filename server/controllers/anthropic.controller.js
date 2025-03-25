@@ -2,7 +2,7 @@ const Anthropic = require('@anthropic-ai/sdk');
 const path = require('path');
 const fs = require('fs-extra');
 const { extractPdfText, chunkText } = require('../utils/pdf.utils');
-const { getSummaryPrompt, getFileSpecificPrompt } = require('../utils/prompts');
+const { getSummaryPrompt, getFileSpecificPrompt, getReviewArticleSectionPrompt } = require('../utils/prompts');
 
 const UPLOADS_DIR = path.join(__dirname, '../uploads');
 
@@ -10,6 +10,66 @@ const UPLOADS_DIR = path.join(__dirname, '../uploads');
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY, // Esta clave debe estar en el archivo .env
 });
+
+/**
+ * Generate a structured summary of PDF documents using Claude
+ */
+/**
+ * Generate a specific section of a review article based on multiple PDF summaries
+ */
+exports.generateReviewArticleSection = async (req, res) => {
+  try {
+    const { content, section, prompt, language = "Español", model = "claude-3-7-sonnet-20250219", temperature = 0.7, max_tokens = 8000 } = req.body;
+    
+    if (!content) {
+      return res.status(400).json({ success: false, message: 'Content is required' });
+    }
+
+    if (!section || !prompt) {
+      return res.status(400).json({ success: false, message: 'Section title and prompt are required' });
+    }
+
+    // Prepare the custom prompt for this section
+    const customPrompt = getReviewArticleSectionPrompt(prompt, language, content);
+
+    console.log(`Generating article section "${section}" with ${max_tokens} max tokens`);
+
+    // Make the API call to Claude
+    const response = await anthropic.messages.create({
+      model: model,
+      max_tokens: max_tokens,
+      temperature: temperature,
+      messages: [{ role: 'user', content: customPrompt }],
+    });
+
+    const generatedContent = response.content[0].text;
+    
+    // Calculate token usage
+    const promptTokens = response.usage.input_tokens;
+    const completionTokens = response.usage.output_tokens;
+    const totalTokens = promptTokens + completionTokens;
+
+    return res.json({
+      success: true,
+      data: {
+        content: generatedContent,
+        section: section,
+        tokenUsage: {
+          promptTokens,
+          completionTokens,
+          totalTokens
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Error generating review article section:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error generating review article section',
+      error: error.message
+    });
+  }
+};
 
 /**
  * Generate a structured summary of PDF documents using Claude

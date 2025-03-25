@@ -10,9 +10,13 @@ import {
   Backdrop,
   CircularProgress
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import PdfList from './PdfList';
 import FileUpload from './FileUpload';
 import QueryForm from './QueryForm';
+import ReviewArticleForm from './ReviewArticle';
 import ResultsDisplay from './ResultsDisplay';
 import { usePdf } from '../contexts/PdfContext';
 
@@ -45,8 +49,11 @@ const MainContent = () => {
     summary,
     queryLoading,
     summaryLoading,
+    reviewArticleLoading,
+    batchProcessing,
     clearSearchResults,
-    clearSummary
+    clearSummary,
+    clearReviewArticle
   } = usePdf();
 
   const handleTabChange = (event, newValue) => {
@@ -57,13 +64,16 @@ const MainContent = () => {
     if (newValue === 1 && summary) {
       clearSummary();
     }
+    if (newValue === 2) {
+      clearReviewArticle();
+    }
   };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loading || queryLoading || summaryLoading}
+        open={loading || queryLoading || summaryLoading || reviewArticleLoading || batchProcessing}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -101,8 +111,27 @@ const MainContent = () => {
                   },
                 }}
               >
-                <Tab label="Búsqueda Simple" id="simple-tab-0" />
-                <Tab label="Resumen Estructurado" id="simple-tab-1" />
+                <Tab 
+                  icon={<SearchIcon />}
+                  iconPosition="start"
+                  label={<Typography sx={{ textTransform: 'uppercase', fontWeight: 'medium' }}>Inteligencia Sobre Artículo</Typography>} 
+                  id="simple-tab-0" 
+                />
+                <Tab 
+                  icon={<SummarizeIcon />}
+                  iconPosition="start"
+                  label={<Typography sx={{ textTransform: 'uppercase', fontWeight: 'medium' }}>Resumen Estructurado</Typography>} 
+                  id="simple-tab-1" 
+                />
+                <Tab 
+                  icon={<MenuBookIcon />}
+                  iconPosition="start"
+                  label={<Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography sx={{ textTransform: 'uppercase', fontWeight: 'medium' }}>Artículo de Revisión Científica</Typography>
+                    <Box sx={{ ml: 1, px: 0.7, py: 0.2, bgcolor: 'warning.main', borderRadius: 1, fontSize: '0.7rem', color: 'white', fontWeight: 'bold' }}>Beta</Box>
+                  </Box>} 
+                  id="simple-tab-2" 
+                />
               </Tabs>
             </Box>
             
@@ -114,6 +143,10 @@ const MainContent = () => {
             <TabPanel value={tabValue} index={1}>
               <QueryForm isSimpleQuery={false} />
               {summary && <ResultsDisplay type="summary" data={summary} />}
+            </TabPanel>
+            
+            <TabPanel value={tabValue} index={2}>
+              <ReviewArticleForm />
             </TabPanel>
           </Paper>
         </Grid>

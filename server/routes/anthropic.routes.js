@@ -8,4 +8,7 @@ router.post('/query', anthropicController.processQuery);
 // Generate summary using Claude
 router.post('/summary', anthropicController.generateSummary);
 
+// Generate review article section using Claude
+router.post('/review-article-section', anthropicController.generateReviewArticleSection);
+
 module.exports = router;

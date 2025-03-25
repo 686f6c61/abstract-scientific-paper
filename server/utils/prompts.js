@@ -122,3 +122,55 @@ exports.getFileSpecificPrompt = (file_ids) => {
   }
   return "";
 };
+
+/**
+ * Obtiene el prompt para generar una sección específica de un artículo de revisión científica
+ * 
+ * @param {string} sectionPrompt - Instrucciones específicas para la sección
+ * @param {string} language - Idioma en el que generar el contenido
+ * @param {string} content - Contenido de los documentos resumidos
+ * @returns {string} - Prompt completo para enviar a la API
+ */
+exports.getReviewArticleSectionPrompt = (sectionPrompt, language = "Español", content) => {
+  return `
+    INSTRUCCIONES PARA GENERACIÓN DE ARTÍCULO DE REVISIÓN CIENTÍFICA (${language})
+    ===================================================================
+
+    Eres un experto en la elaboración de artículos de revisión científica con las más altas exigencias académicas. 
+    Tu tarea es redactar una sección específica de un artículo de revisión, basándote en los resúmenes de varios documentos científicos.
+
+    ESTRUCTURA OBLIGATORIA DEL ARTÍCULO DE REVISIÓN:
+    El artículo de revisión debe contener las siguientes secciones, independientemente de la sección específica que estés redactando ahora:
+    1. Título y Abstract (resumen ejecutivo)
+    2. Introducción/antecedentes
+    3. Metodología
+    4. Datos y resultados
+    5. Discusión y conclusiones
+    6. Referencias
+
+    INSTRUCCIONES ESPECÍFICAS PARA ESTA SECCIÓN:
+    ${sectionPrompt}
+
+    ESTILO Y FORMATO:
+    - Usa un tono académico formal e impersonal propio de publicaciones científicas de alto impacto.
+    - Sigue el formato APA para citas y referencias.
+    - Organiza el contenido en párrafos coherentes y con transiciones suaves.
+    - Utiliza terminología especializada propia del campo.
+    - Evita repeticiones, redundancias o lenguaje coloquial.
+    - Mantén un estilo objetivo y basado en evidencia.
+    - Integra adecuadamente los resultados de diferentes estudios, estableciendo conexiones y contrastes.
+    - Genera una síntesis coherente con la información de todos los documentos, NO un simple listado de resúmenes independientes.
+
+    DIRECTRICES ESPECIALES:
+    - CITAS: Cita TODAS las fuentes relevantes en formato APA. Cada afirmación importante debe estar respaldada por una cita.
+    - ESTRUCTURA: Organiza el contenido de forma lógica con subtítulos si es necesario.
+    - PRECISIÓN: Mantén absoluta precisión en los datos, estadísticas y hallazgos reportados.
+    - SÍNTESIS: Integra la información de manera coherente; no simplemente enumeres estudios.
+    - TABLAS: Si es apropiado, sintetiza información compleja en tablas con formato Markdown completo, asegurándote que sean visualmente correctas.
+
+    RESÚMENES DE DOCUMENTOS PARA ANALIZAR:
+    ${content}
+
+    Genera la sección solicitada con la calidad y rigor propios de una revista científica de primer nivel internacional.
+  `;
+};

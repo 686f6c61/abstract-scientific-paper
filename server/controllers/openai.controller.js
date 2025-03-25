@@ -2,7 +2,7 @@ const { OpenAI } = require('openai');
 const path = require('path');
 const fs = require('fs-extra');
 const { extractPdfText, chunkText } = require('../utils/pdf.utils');
-const { getSummaryPrompt, getFileSpecificPrompt } = require('../utils/prompts');
+const { getSummaryPrompt, getFileSpecificPrompt, getReviewArticleSectionPrompt } = require('../utils/prompts');
 
 const UPLOADS_DIR = path.join(__dirname, '../uploads');
 
@@ -10,6 +10,66 @@ const UPLOADS_DIR = path.join(__dirname, '../uploads');
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+/**
+ * Generate a specific section of a review article based on multiple PDF summaries
+ */
+exports.generateReviewArticleSection = async (req, res) => {
+  try {
+    const { content, section, prompt, language = "Español", model = "gpt-4o", temperature = 0.7, max_tokens = 8000, top_p = 1, frequency_penalty = 0, presence_penalty = 0 } = req.body;
+    
+    if (!content) {
+      return res.status(400).json({ success: false, message: 'Content is required' });
+    }
+
+    if (!section || !prompt) {
+      return res.status(400).json({ success: false, message: 'Section title and prompt are required' });
+    }
+
+    // Prepare the custom prompt for this section
+    const customPrompt = getReviewArticleSectionPrompt(prompt, language, content);
+
+    console.log(`Generating article section "${section}" with ${max_tokens} max tokens`);
+
+    // Make the API call to OpenAI
+    const response = await openai.chat.completions.create({
+      model: model,
+      messages: [{ role: 'user', content: customPrompt }],
+      max_tokens: max_tokens,
+      temperature: temperature,
+      top_p: top_p,
+      frequency_penalty: frequency_penalty,
+      presence_penalty: presence_penalty
+    });
+
+    const generatedContent = response.choices[0].message.content;
+    
+    // Calculate token usage
+    const promptTokens = response.usage.prompt_tokens;
+    const completionTokens = response.usage.completion_tokens;
+    const totalTokens = response.usage.total_tokens;
+
+    return res.json({
+      success: true,
+      data: {
+        content: generatedContent,
+        section: section,
+        tokenUsage: {
+          promptTokens,
+          completionTokens,
+          totalTokens
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Error generating review article section:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error generating review article section',
+      error: error.message
+    });
+  }
+};
 
 /**
  * Process a query against PDF documents

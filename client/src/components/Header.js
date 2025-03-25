@@ -1,14 +1,18 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button, Stack } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Stack, Box } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 
 const Header = () => {
   return (
     <AppBar position="static" color="primary" elevation={0}>
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 600 }}>
-          (U)Boost - GRC
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+          <RocketLaunchIcon sx={{ mr: 1.5 }} />
+          <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
+            (U)Boost scientific paper
+          </Typography>
+        </Box>
         
         <Stack direction="row" spacing={1}>
           <Button 
