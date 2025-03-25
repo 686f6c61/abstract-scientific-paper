@@ -41,8 +41,8 @@ const QueryForm = ({ isSimpleQuery }) => {
   const [error, setError] = useState(null);
   const [modelInfoOpen, setModelInfoOpen] = useState(false);
   
-  // Parámetros avanzados para OpenAI
-  const [maxTokens, setMaxTokens] = useState(4000);
+  // Parámetros avanzados para los modelos
+  const [maxTokens, setMaxTokens] = useState(8000); // Actualizado a 8000 para Claude 3.7 Sonnet
   const [useMaxTokens, setUseMaxTokens] = useState(true);
   const [temperature, setTemperature] = useState(0.7);
   const [topP, setTopP] = useState(1);

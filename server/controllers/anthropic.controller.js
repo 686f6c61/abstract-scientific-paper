@@ -98,10 +98,10 @@ exports.generateSummary = async (req, res) => {
     
     // Define max tokens based on model si no se especificó en los parámetros
     // Mapa de tokens máximos recomendados por modelo de Claude
-    // Claude 3.7 Sonnet tiene una ventana de contexto de 200K tokens
-    // Ajustamos los límites de respuesta de manera conservadora
+    // Claude 3.7 Sonnet tiene una ventana de contexto de 200K tokens y capacidad de 8K tokens de salida por minuto
+    // Aprovechamos al máximo la capacidad de generación
     const maxTokensMap = {
-      "claude-3-7-sonnet-20250219": 4096,   // Claude 3.7 Sonnet - 4K por defecto
+      "claude-3-7-sonnet-20250219": 8000,   // Claude 3.7 Sonnet - 8K para aprovechar su capacidad
       "claude-3-haiku-20240307": 2048,    // Si se añade Claude Haiku en el futuro
       "claude-3-opus-20240229": 4096      // Si se añade Claude Opus en el futuro
     };
