@@ -85,7 +85,7 @@
 ### Backend ⚙️
 - Node.js (18+) y Express
 - OpenAI API (GPT-4o, GPT-4o-mini)
-- Anthropic API (Claude 3.7 Sonnet 2025)
+- Anthropic API (Claude 3.7 Sonnet)
 - Multer (middleware subida PDFs)
 - PDF.js (procesamiento PDFs)
 
@@ -98,7 +98,7 @@
 - npm o yarn
 - Claves API de OpenAI y Anthropic
 
-### 🛠️ Instalación rápida
+### ��️ Instalación rápida
 ```bash
 git clone https://github.com/686f6c61/abstract-scientific-paper.git
 cd abstract-scientific-paper
