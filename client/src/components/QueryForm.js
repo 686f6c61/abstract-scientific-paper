@@ -600,7 +600,7 @@ const QueryForm = ({ isSimpleQuery }) => {
         >
           {isSimpleQuery 
             ? 'Buscar' 
-            : 'Generar Resumen'}
+            : 'Generar'}
         </Button>
       </Box>
       
@@ -888,11 +888,7 @@ const QueryForm = ({ isSimpleQuery }) => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       />
       
-      {!isSimpleQuery && (
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-          El resumen estructurado incluirá título, contexto, metodología, resultados, referencias, variables empleadas y otros elementos relevantes. La generación puede tardar hasta dos minutos dependiendo del tamaño de los documentos y el modelo seleccionado de OpenAI.
-        </Typography>
-      )}
+      {/* Mensaje informativo eliminado */}
     </Box>
   );
 };
