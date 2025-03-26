@@ -339,7 +339,7 @@ const ReviewArticleForm = () => {
                   onClick={handleProcessBatch}
                   sx={getPrimaryButtonStyles(selectedPdfs.length === 0 || batchProcessing)}
                 >
-                  {batchProcessing ? 'Procesando...' : 'Procesar Artículos Seleccionados'}
+                  {batchProcessing ? 'Procesando...' : 'Crear'}
                 </Button>
               </Box>
             </>
