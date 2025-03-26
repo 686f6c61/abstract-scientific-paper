@@ -21,6 +21,10 @@ export const PdfContextProvider = ({ children }) => {
   const [currentModel, setCurrentModel] = useState('gpt-4o-mini'); // Modelo actual por defecto
   const [pdfsProcessed, setPdfsProcessed] = useState(0); // Contador de PDFs procesados
   
+  // Estado para historial de consultas
+  const [queryHistory, setQueryHistory] = useState([]);
+  const [selectedQueries, setSelectedQueries] = useState([]);
+  
   // Estados para procesamiento por lotes
   const [batchProcessing, setBatchProcessing] = useState(false);
   const [batchProgress, setBatchProgress] = useState({ current: 0, total: 0 });
@@ -32,10 +36,108 @@ export const PdfContextProvider = ({ children }) => {
   const [reviewArticleLoading, setReviewArticleLoading] = useState(false);
   const [currentSection, setCurrentSection] = useState(null);
 
-  // Load PDFs when component mounts
+  // Load PDFs and query history when component mounts
   useEffect(() => {
     fetchPdfs();
+    loadQueryHistory();
+    
+    // Para desarrollo: mostrar el historial actual en la consola
+    console.log('Historial de consultas cargado:', localStorage.getItem('queryHistory'));
   }, []);
+  
+  // Añadir listener para eventos de storage para manejar cambios entre pestañas
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === 'queryHistory') {
+        loadQueryHistory();
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+  
+  // Cargar historial de consultas desde localStorage
+  const loadQueryHistory = () => {
+    try {
+      const savedHistory = localStorage.getItem('queryHistory');
+      if (savedHistory) {
+        const parsed = JSON.parse(savedHistory);
+        if (Array.isArray(parsed)) {
+          setQueryHistory(parsed);
+          console.log(`Cargadas ${parsed.length} consultas del historial`);
+        } else {
+          console.warn('El historial de consultas no es un array. Reiniciando.');
+          setQueryHistory([]);
+          localStorage.removeItem('queryHistory');
+        }
+      } else {
+        console.log('No se encontró historial de consultas guardado');
+      }
+    } catch (err) {
+      console.error('Error loading query history:', err);
+      // Si hay un error en el formato, reseteamos el historial
+      localStorage.removeItem('queryHistory');
+      setQueryHistory([]);
+    }
+  };
+  
+  // Guardar historial de consultas en localStorage
+  const saveQueryHistory = (history) => {
+    try {
+      if (!Array.isArray(history)) {
+        console.error('Intentando guardar un historial que no es un array:', history);
+        return;
+      }
+      
+      if (history.length === 0) {
+        localStorage.removeItem('queryHistory');
+        return;
+      }
+      
+      const historyString = JSON.stringify(history);
+      localStorage.setItem('queryHistory', historyString);
+      console.log(`Guardadas ${history.length} consultas en el historial`);
+      
+      // Verificación adicional
+      const savedHistory = localStorage.getItem('queryHistory');
+      if (!savedHistory) {
+        console.error('Error: No se pudo guardar el historial en localStorage');
+      }
+    } catch (err) {
+      console.error('Error saving query history:', err);
+    }
+  };
+  
+  // Eliminar una consulta del historial
+  const deleteQueryFromHistory = (queryId) => {
+    const updatedHistory = queryHistory.filter(query => query.id !== queryId);
+    setQueryHistory(updatedHistory);
+    saveQueryHistory(updatedHistory);
+    
+    // También eliminar de seleccionados si estaba seleccionado
+    if (selectedQueries.includes(queryId)) {
+      setSelectedQueries(selectedQueries.filter(id => id !== queryId));
+    }
+  };
+  
+  // Limpiar todo el historial de consultas
+  const clearQueryHistory = () => {
+    setQueryHistory([]);
+    setSelectedQueries([]);
+    saveQueryHistory([]);
+  };
+  
+  // Marcar/desmarcar una consulta como seleccionada
+  const toggleQuerySelection = (queryId) => {
+    setSelectedQueries(prevSelected => {
+      if (prevSelected.includes(queryId)) {
+        return prevSelected.filter(id => id !== queryId);
+      } else {
+        return [...prevSelected, queryId];
+      }
+    });
+  };
 
   // Fetch all PDFs from the server
   const fetchPdfs = async () => {
@@ -221,13 +323,20 @@ export const PdfContextProvider = ({ children }) => {
       const response = await axios.post(`/api/${actualEndpoint}/query`, payload);
       
       const responseData = response.data.data;
+      
+      // Variables para tokens (por defecto cero si no hay información)
+      let newInputTokens = 0;
+      let newOutputTokens = 0;
+      let totalTokens = 0;
+      
       // Actualizar contador de tokens si la respuesta incluye información de uso
       if (responseData.tokenUsage) {
-        const { promptTokens, completionTokens, totalTokens } = responseData.tokenUsage;
+        const { promptTokens, completionTokens, totalTokens: respTotalTokens } = responseData.tokenUsage;
         
         // Convertir a números y asegurar que no son NaN
-        const newInputTokens = Number(promptTokens) || 0;
-        const newOutputTokens = Number(completionTokens) || 0;
+        newInputTokens = Number(promptTokens) || 0;
+        newOutputTokens = Number(completionTokens) || 0;
+        totalTokens = respTotalTokens;
         
         // Actualizar los tokens de entrada y salida
         setInputTokens(prev => prev + newInputTokens);
@@ -239,6 +348,27 @@ export const PdfContextProvider = ({ children }) => {
         
         console.log(`Tokens: ${newInputTokens} entrada, ${newOutputTokens} salida, ${totalTokens} total. Coste: $${cost.toFixed(6)}`);
       }
+      
+      // Añadir consulta al historial (siempre, no solo si hay tokenUsage)
+      const newQuery = {
+        id: Date.now().toString(),
+        query,
+        response: responseData.content || responseData.response || '',
+        sources: responseData.sources || [],
+        model,
+        tokenUsage: responseData.tokenUsage || { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+        timestamp: new Date().toISOString()
+      };
+      
+      // Crear una copia del queryHistory actual para evitar problemas de referencias
+      const currentHistory = Array.isArray(queryHistory) ? [...queryHistory] : [];
+      
+      const updatedHistory = [newQuery, ...currentHistory];
+      setQueryHistory(updatedHistory);
+      saveQueryHistory(updatedHistory);
+      
+      // Verificación de seguridad
+      console.log(`Consulta añadida al historial. Total: ${updatedHistory.length} elementos`);
       
       setSearchResults(responseData);
       return responseData;
@@ -314,13 +444,20 @@ export const PdfContextProvider = ({ children }) => {
       });
       
       const responseData = response.data.data;
+      
+      // Variables para tokens (por defecto cero si no hay información)
+      let newInputTokens = 0;
+      let newOutputTokens = 0;
+      let totalTokens = 0;
+      
       // Actualizar contador de tokens si la respuesta incluye información de uso
       if (responseData.tokenUsage) {
-        const { promptTokens, completionTokens, totalTokens } = responseData.tokenUsage;
+        const { promptTokens, completionTokens, totalTokens: respTotalTokens } = responseData.tokenUsage;
         
         // Convertir a números y asegurar que no son NaN
-        const newInputTokens = Number(promptTokens) || 0;
-        const newOutputTokens = Number(completionTokens) || 0;
+        newInputTokens = Number(promptTokens) || 0;
+        newOutputTokens = Number(completionTokens) || 0;
+        totalTokens = respTotalTokens;
         
         // Actualizar los tokens de entrada y salida
         setInputTokens(prev => prev + newInputTokens);
@@ -332,6 +469,28 @@ export const PdfContextProvider = ({ children }) => {
         
         console.log(`Tokens: ${newInputTokens} entrada, ${newOutputTokens} salida, ${totalTokens} total. Coste: $${cost.toFixed(6)}`);
       }
+      
+      // Añadir resumen al historial de consultas (siempre, no solo si hay tokenUsage)
+      const newQuery = {
+        id: Date.now().toString(),
+        query,
+        response: responseData.summary || '',
+        sources: responseData.sources || [],
+        model: modelName,
+        tokenUsage: responseData.tokenUsage || { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+        timestamp: new Date().toISOString(),
+        isStructuredSummary: true // Marcar que es un resumen estructurado para distinguirlo
+      };
+      
+      // Crear una copia del queryHistory actual para evitar problemas de referencias
+      const currentHistory = Array.isArray(queryHistory) ? [...queryHistory] : [];
+      
+      const updatedHistory = [newQuery, ...currentHistory];
+      setQueryHistory(updatedHistory);
+      saveQueryHistory(updatedHistory);
+      
+      // Verificación de seguridad
+      console.log(`Resumen añadido al historial. Total: ${updatedHistory.length} elementos`);
       
       setSummary(responseData);
       return responseData;
@@ -634,6 +793,9 @@ export const PdfContextProvider = ({ children }) => {
       deletePdf,
       togglePdfSelection,
       selectAllPdfs,
+      deleteQueryFromHistory,
+      clearQueryHistory,
+      toggleQuerySelection,
       setSearchQuery,
       processQuery,
       generateSummary,

@@ -63,9 +63,12 @@
   - **Penalización frecuencia:** Evita repetición de frases.
   - **Penalización presencia:** Evita repetición de temas.
 
-- 💾 **Opciones de exportación**
+- 💾 **Opciones de exportación y gestión del historial**
   - Descarga en formato Markdown (.md) y texto plano (.txt).
   - Copia rápida directa al portapapeles.
+  - Historial completo de consultas realizadas con indicadores visuales.
+  - Exportación de múltiples consultas seleccionadas en archivo ZIP.
+  - Reutilización de consultas anteriores con un solo clic.
 
 - 🎨 **Interfaz moderna y amigable**
   - Diseño intuitivo y responsive con Material-UI.
@@ -148,6 +151,23 @@ npm start
 ```
 - Frontend React: `http://localhost:3000`
 - Backend Express: `http://localhost:5000`
+
+---
+
+## 📜 Gestión del historial de consultas
+
+El sistema implementa un historial completo de consultas y resúmenes con múltiples funcionalidades:
+
+- **Guardado automático**: Todas las consultas y resúmenes se guardan automáticamente.
+- **Visualización detallada**: Diferenciación visual entre consultas simples y resúmenes estructurados.
+- **Selección múltiple**: Posibilidad de seleccionar varias consultas para operaciones por lotes.
+- **Exportación ZIP**: Las consultas seleccionadas pueden exportarse como archivo ZIP con cada consulta en formato TXT.
+- **Operaciones de consulta**:
+  - Copia al portapapeles
+  - Descarga individual
+  - Preguntas de seguimiento basadas en respuestas anteriores
+  - Reutilización de consultas previas
+- **Persistencia**: El historial se mantiene entre sesiones mediante almacenamiento local.
 
 ---
 
