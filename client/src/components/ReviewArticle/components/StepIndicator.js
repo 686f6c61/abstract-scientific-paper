@@ -3,17 +3,36 @@ import {
   Grid,
   Card,
   CardContent,
-  Typography
+  Typography,
+  Box
 } from '@mui/material';
+import ArticleIcon from '@mui/icons-material/Article';
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 /**
  * Componente que muestra los indicadores de los pasos del proceso
  */
 const StepIndicator = ({ currentStep }) => {
   const steps = [
-    { number: 1, title: 'Paso 1', description: 'Selección de Artículos' },
-    { number: 2, title: 'Paso 2', description: 'Selección de Resúmenes' },
-    { number: 3, title: 'Paso 3', description: 'Artículo Generado' }
+    { 
+      number: 1, 
+      title: 'Paso 1', 
+      description: 'Selección de Artículos',
+      icon: <ArticleIcon sx={{ fontSize: 36 }} />
+    },
+    { 
+      number: 2, 
+      title: 'Paso 2', 
+      description: 'Selección de Resúmenes',
+      icon: <SummarizeIcon sx={{ fontSize: 36 }} />
+    },
+    { 
+      number: 3, 
+      title: 'Paso 3', 
+      description: 'Artículo Generado',
+      icon: <DescriptionIcon sx={{ fontSize: 36 }} />
+    }
   ];
 
   return (
@@ -33,7 +52,10 @@ const StepIndicator = ({ currentStep }) => {
                 justifyContent: 'center'
               }}
             >
-              <Typography variant="h6">{step.title}</Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
+                {step.icon}
+              </Box>
+              <Typography variant="h6" sx={{ fontWeight: 'bold' }}>{step.title}</Typography>
               <Typography>{step.description}</Typography>
             </CardContent>
           </Card>
