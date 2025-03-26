@@ -12,6 +12,14 @@
   <b>Sistema avanzado de procesamiento, análisis y síntesis de documentos científicos con tecnología RAG</b>
 </p>
 
+## 📸 Capturas de pantalla
+
+![Inteligencia sobre artículo: Consulta contextual precisa sobre PDFs científicos](img/consulta-simple.png)
+*Inteligencia sobre artículo: Consulta contextual precisa sobre PDFs científicos*
+
+![Artículo de revisión científica: Generación de revisiones completas a partir de múltiples PDFs](img/revision-cientifica.png)
+*Artículo de revisión científica: Generación de revisiones completas a partir de múltiples PDFs*
+
 ---
 
 ## 🔥 Características principales
@@ -175,6 +183,14 @@ Las contribuciones son bienvenidas. Sigue estos pasos para contribuir:
 Este proyecto está disponible bajo Licencia MIT. Ver [`LICENSE`](LICENSE) para detalles.
 
 ---
+
+## 📋 Ejemplos de resúmenes generados
+
+### Ejemplos de contenido generado
+
+- [**Resumen generado con GPT-4o-mini**](examples/sample-abstract-4o-mini.md) - La importancia de la representación de personas con discapacidad para abordar el sesgo implícito en el lugar de trabajo
+
+- [**Artículo de revisión generado con Claude 3.7 Sonnet**](examples/sample-review-claude-sonnet-37.md) - La importancia del capital psicológico en la relación entre orientación religiosa y estrés laboral
 
 ## 📧 Contacto y soporte
 
