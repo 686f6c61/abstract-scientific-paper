@@ -599,7 +599,7 @@ const QueryForm = ({ isSimpleQuery }) => {
           disabled={queryLoading || summaryLoading}
         >
           {isSimpleQuery 
-            ? 'Buscar' 
+            ? 'Consultar' 
             : 'Generar'}
         </Button>
       </Box>
