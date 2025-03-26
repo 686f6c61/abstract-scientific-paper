@@ -111,25 +111,51 @@
 ## 🚀 Instalación y ejecución
 
 ### 🔧 Requisitos previos
-- Node.js v18+
-- npm o yarn
-- Claves API de OpenAI y Anthropic
+- Node.js v18+ (recomendado v18.17.0 o superior)
+- npm v9+ o yarn v1.22+
+- Git instalado
+- Claves API de OpenAI y Anthropic (opcionales para la instalación inicial)
 
-### ��️ Instalación rápida
+### 📥 Instalación paso a paso
+
+#### 1. Clonar el repositorio
 ```bash
 git clone https://github.com/686f6c61/abstract-scientific-paper.git
 cd abstract-scientific-paper
+```
+
+#### 2. Instalar dependencias del servidor
+```bash
+cd server
 npm install
+cd ..
 ```
 
-### ⚙️ Configuración de variables de entorno
-Crear archivo `.env` en `/server` basado en `.env.example`:
+#### 3. Instalar dependencias del cliente
+```bash
+cd client
+npm install
+cd ..
+```
+
+#### 4. Configurar variables de entorno
+Crea un archivo `.env` en la carpeta raíz del proyecto basado en el archivo `.env.example`:
+
+```bash
+# Copia el archivo de ejemplo
+cp .env.example .env
+
+# Edita el archivo con tu editor favorito
+nano .env   # o usa: vim .env, code .env, etc.
+```
+
+Modifica el archivo `.env` con tus claves API:
 ```env
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
+OPENAI_API_KEY=sk-...  # Tu clave de OpenAI
+ANTHROPIC_API_KEY=sk-ant-...  # Tu clave de Anthropic
 ```
 
-> **Nota**: Las API Keys también pueden configurarse directamente desde la interfaz gráfica de la aplicación usando el botón de configuración en la barra superior.
+> **Nota**: No es obligatorio configurar las API Keys en este paso. También puedes configurarlas más tarde directamente desde la interfaz gráfica de la aplicación usando el botón de configuración (🔑) en la barra superior.
 
 ### 🔑 Obtención de API Keys
 
@@ -137,20 +163,57 @@ ANTHROPIC_API_KEY=sk-ant-...
 1. Crea una cuenta en [OpenAI Platform](https://platform.openai.com/signup)
 2. Ve a la sección de [API Keys](https://platform.openai.com/api-keys)
 3. Haz clic en "Create new API key"
-4. Copia la API key generada (comienza con "sk-")
+4. Asigna un nombre descriptivo a tu clave (ej. "UBoostApp")
+5. Copia la API key generada (comienza con "sk-")
+6. Guárdala en un lugar seguro, ¡no podrás volver a verla!
 
 #### Anthropic API Key (para Claude 3.7 Sonnet)
 1. Crea una cuenta en [Anthropic Console](https://console.anthropic.com/signup)
 2. Ve a la sección de [API Keys](https://console.anthropic.com/account/keys)
 3. Haz clic en "Create key"
-4. Copia la API key generada (comienza con "sk-ant-")
+4. Asigna un nombre descriptivo y establece los permisos
+5. Copia la API key generada (comienza con "sk-ant-")
+6. Guárdala en un lugar seguro, ¡no podrás volver a verla!
 
 ### ▶️ Ejecución de la aplicación
+
+#### Iniciar en modo desarrollo (dos terminales)
+
+**Terminal 1 - Servidor Backend:**
 ```bash
+cd server
+npm run dev
+```
+
+**Terminal 2 - Cliente Frontend:**
+```bash
+cd client
 npm start
 ```
-- Frontend React: `http://localhost:3000`
-- Backend Express: `http://localhost:5000`
+
+#### Iniciar con un solo comando (producción)
+```bash
+# En la carpeta raíz del proyecto
+npm start
+```
+
+### 🌐 Acceso a la aplicación
+- Frontend React: [http://localhost:3000](http://localhost:3000)
+- Backend Express: [http://localhost:5000](http://localhost:5000)
+
+### 🔍 Verificar la instalación
+Para comprobar que todo está funcionando correctamente:
+
+1. Abre [http://localhost:3000](http://localhost:3000) en tu navegador
+2. Asegúrate de que la interfaz se carga correctamente
+3. Configura tus API Keys usando el botón de configuración en la barra superior
+4. Sube un PDF de prueba para verificar la funcionalidad
+
+### ❓ Solución de problemas comunes
+
+- **Error: ENOENT no such file or directory**: Asegúrate de que la estructura de carpetas sea correcta y estés ejecutando los comandos desde la ubicación adecuada.
+- **Error de conexión al servidor**: Verifica que el servidor backend esté ejecutándose en el puerto 5000.
+- **Problemas con las API Keys**: Comprueba que las claves están correctamente formateadas y son válidas.
 
 ---
 
@@ -175,18 +238,57 @@ El sistema implementa un historial completo de consultas y resúmenes con múlti
 
 ```
 📁 abstract-scientific-paper
-├── 📁 client
-│   ├── 📁 src
-│   │   ├── 📁 components   # Componentes React
-│   │   ├── 📁 contexts     # Gestión de estados globales
-│   │   └── 📁 utils        # Utilidades frontend
+├── 📁 client                      # Frontend React
+│   ├── 📁 public                # Archivos públicos y estáticos
+│   │   └── 📁 icons            # Iconos de la aplicación
+│   │
+│   └── 📁 src                   # Código fuente React
+│       ├── 📁 components        # Componentes UI
+│       │   └── 📁 ReviewArticle  # Componentes de artículo de revisión
+│       ├── 📁 contexts          # Contextos (API Keys, PDF, etc.)
+│       ├── 📁 services          # Servicios para comunicación con API
+│       ├── 📁 utils             # Utilidades y funciones auxiliares
+│       └── 📁 workers           # Web workers para procesamiento
 │
-└── 📁 server
-    ├── 📁 controllers      # Controladores API
-    ├── 📁 routes           # Rutas y endpoints API
-    ├── 📁 utils            # Procesamiento PDFs y prompts
-    └── 📁 uploads          # PDFs cargados
+├── 📁 server                      # Backend Node.js/Express
+│   ├── 📁 controllers        # Controladores de rutas API
+│   ├── 📁 routes             # Definición de rutas API
+│   ├── 📁 uploads            # Almacenamiento temporal de PDFs
+│   └── 📁 utils              # Utilidades para proceso RAG y IA
+│
+├── 📁 examples                    # Ejemplos de resultados generados
+└── 📁 img                         # Imágenes para documentación
 ```
+
+### Componentes principales
+
+#### Componentes de infraestructura
+- **Header**: Barra superior con navegación, gestión de API Keys y historial de versiones (V.01-V.09)
+- **ApiKeysConfig**: Interfaz mejorada para configuración y validación de claves API de OpenAI y Anthropic
+- **VersionHistory**: Historial completo de versiones con detalles de cada actualización
+- **PdfContext**: Contexto React para gestión centralizada de PDFs, consultas e historial
+- **MainContent**: Contenedor principal con sistema de pestañas para las diferentes funcionalidades
+
+#### Consulta contextual ("INTELIGENCIA SOBRE ARTÍCULO")
+- **QueryForm**: Formulario principal para consultas contextuales sobre PDFs
+- **QueryInput**: Campo de consulta con sugerencias y autocompletado
+- **QueryExamples**: Ejemplos preconfigurados para consultas comunes
+- **FileUpload**: Componente para subida individual y múltiple de PDFs
+- **PdfList**: Visualización y gestión de documentos cargados
+- **ResultsDisplay**: Visualización de resultados con formato Markdown
+
+#### Artículo de revisión científica
+- **ReviewArticleForm**: Interfaz mejorada para generación de artículos de revisión con etiqueta "Beta"
+- **SpecificInstructions**: Campo de texto libre para instrucciones detalladas de generación
+- **ModelSelector**: Selector de modelos con diálogo informativo sobre cada modelo disponible
+- **AdvancedOptions**: Panel rediseñado con controles para temperatura, tokens y otros parámetros
+- **StepIndicator**: Indicador visual del proceso de generación
+- **LanguageSelector**: Selección ampliada de idiomas (Español, Inglés, Francés, Alemán, Italiano, Portugués)
+
+#### Historial y exportación
+- **QueryHistory**: Registro completo del historial de consultas realizadas
+- **QueryHistoryFixed**: Panel de historial persistente con funcionalidad de exportación
+- **ExportOptions**: Opciones de descarga en formato Markdown, texto y ZIP
 
 ---
 
