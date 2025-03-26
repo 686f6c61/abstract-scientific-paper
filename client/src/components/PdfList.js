@@ -69,27 +69,29 @@ const PdfList = () => {
                 </Typography>
               }
               secondary={
-                <Box sx={{ mt: 0.5 }}>
-                  <Chip 
-                    label={`${pdf.pageCount} páginas`} 
-                    size="small" 
-                    sx={{ 
-                      mr: 0.5, 
-                      bgcolor: isSelected ? 'primary.dark' : 'grey.100',
-                      color: isSelected ? 'white' : 'text.secondary',
-                    }} 
-                  />
-                  {pdf.vectorized && (
+                <Typography component="div" variant="body2">
+                  <Box sx={{ mt: 0.5 }}>
                     <Chip 
-                      label="Vectorizado" 
+                      label={`${pdf.pageCount} páginas`} 
                       size="small" 
                       sx={{ 
-                        bgcolor: isSelected ? 'success.dark' : 'success.light',
+                        mr: 0.5, 
+                        bgcolor: isSelected ? 'primary.dark' : 'grey.100',
                         color: isSelected ? 'white' : 'text.secondary',
                       }} 
                     />
-                  )}
-                </Box>
+                    {pdf.vectorized && (
+                      <Chip 
+                        label="Vectorizado" 
+                        size="small" 
+                        sx={{ 
+                          bgcolor: isSelected ? 'success.dark' : 'success.light',
+                          color: isSelected ? 'white' : 'text.secondary',
+                        }} 
+                      />
+                    )}
+                  </Box>
+                </Typography>
               }
             />
             <ListItemSecondaryAction>
