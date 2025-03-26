@@ -182,27 +182,33 @@ const ApiKeysConfig = () => {
           </Alert>
 
           <Box sx={{ my: 3, p: 2, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid #e0e0e0' }}>
-            <Typography variant="body2" color="text.secondary" paragraph>
+            <Typography variant="body2" color="text.secondary" gutterBottom>
               <strong>Importante:</strong> Para utilizar esta aplicación, necesitas al menos una API key válida de OpenAI o Anthropic.
             </Typography>
-            <Typography variant="body2" color="text.secondary" paragraph>
-              • <strong>OpenAI API:</strong> Necesaria para usar los modelos GPT-4o y GPT-4o-mini.
-              <Box sx={{ mt: 1, ml: 3 }}>
-                1. Crea una cuenta en <Link href="https://platform.openai.com/signup" target="_blank">OpenAI</Link>
-                2. Ve a <Link href="https://platform.openai.com/account/api-keys" target="_blank">API Keys</Link>
-                3. Haz clic en "Create new API key"
-                4. Copia la API key generada (comienza con "sk-")
+            
+            <Box component="div" sx={{ mt: 2 }}>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                • <strong>OpenAI API:</strong> Necesaria para usar los modelos GPT-4o y GPT-4o-mini.
+              </Typography>
+              <Box component="div" sx={{ mt: 0.5, ml: 3 }}>
+                <Typography variant="body2" color="text.secondary" gutterBottom>1. Crea una cuenta en OpenAI (platform.openai.com/signup)</Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>2. Ve a API Keys (platform.openai.com/api-keys)</Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>3. Haz clic en "Create new API key"</Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>4. Copia la API key generada (comienza con "sk-")</Typography>
               </Box>
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              • <strong>Anthropic API:</strong> Necesaria para usar el modelo Claude 3.7 Sonnet.
-              <Box sx={{ mt: 1, ml: 3 }}>
-                1. Crea una cuenta en <Link href="https://console.anthropic.com/signup" target="_blank">Anthropic</Link>
-                2. Ve a <Link href="https://console.anthropic.com/account/keys" target="_blank">API Keys</Link>
-                3. Haz clic en "Create key"
-                4. Copia la API key generada (comienza con "sk-ant-")
+            </Box>
+            
+            <Box component="div" sx={{ mt: 2 }}>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                • <strong>Anthropic API:</strong> Necesaria para usar el modelo Claude 3.7 Sonnet.
+              </Typography>
+              <Box component="div" sx={{ mt: 0.5, ml: 3 }}>
+                <Typography variant="body2" color="text.secondary" gutterBottom>1. Crea una cuenta en Anthropic (console.anthropic.com/signup)</Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>2. Ve a API Keys (console.anthropic.com/account/keys)</Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>3. Haz clic en "Create key"</Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>4. Copia la API key generada (comienza con "sk-ant-")</Typography>
               </Box>
-            </Typography>
+            </Box>
           </Box>
           
           <Box sx={{ mt: 4 }}>
@@ -222,11 +228,11 @@ const ApiKeysConfig = () => {
                 variant="outlined"
                 type={showOpenaiKey ? "text" : "password"}
                 placeholder="sk-..."
-                helperText={
-                  <Typography variant="caption">
-                    Obtén tu API Key en: <Link href="https://platform.openai.com/account/api-keys" target="_blank">platform.openai.com</Link>
-                  </Typography>
-                }
+                helperText="Obtén tu API Key en: platform.openai.com"
+                FormHelperTextProps={{
+                  component: 'div',
+                  sx: { mt: 1 }
+                }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -268,11 +274,11 @@ const ApiKeysConfig = () => {
                 variant="outlined"
                 type={showAnthropicKey ? "text" : "password"}
                 placeholder="sk-ant-..."
-                helperText={
-                  <Typography variant="caption">
-                    Obtén tu API Key en: <Link href="https://console.anthropic.com/account/keys" target="_blank">console.anthropic.com</Link>
-                  </Typography>
-                }
+                helperText="Obtén tu API Key en: console.anthropic.com"
+                FormHelperTextProps={{
+                  component: 'div',
+                  sx: { mt: 1 }
+                }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -308,7 +314,7 @@ const ApiKeysConfig = () => {
             onClick={saveKeys} 
             color="primary" 
             variant="contained"
-            disabled={(openaiKey && openaiKeyValid !== true) || (anthropicKey && anthropicKeyValid !== true)}
+            disabled={Boolean((openaiKey && openaiKeyValid !== true) || (anthropicKey && anthropicKeyValid !== true))}
           >
             Guardar configuración
           </Button>
