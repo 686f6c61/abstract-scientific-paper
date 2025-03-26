@@ -23,8 +23,23 @@ import ArticleIcon from '@mui/icons-material/Article';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import HistoryToggleOffIcon from '@mui/icons-material/HistoryToggleOff';
+import FolderZipIcon from '@mui/icons-material/FolderZip';
 
 const versionHistory = [
+  {
+    version: "V.09",
+    title: "Historial de consultas y bajada en Zip",
+    date: "Marzo 2025",
+    icon: <HistoryToggleOffIcon />,
+    features: [
+      "Registro completo del historial de consultas realizadas",
+      "Interfaz para visualizar consultas anteriores",
+      "Descarga de todos los resultados en formato ZIP",
+      "Organización automática de archivos por tipo y fecha"
+    ],
+    highlight: true
+  },
   {
     version: "V.08",
     title: "Gestión de API Keys",
@@ -36,7 +51,7 @@ const versionHistory = [
       "Indicador visual del estado de configuración",
       "Almacenamiento seguro en archivo .env local"
     ],
-    highlight: true
+    highlight: false
   },
   {
     version: "V.07",
