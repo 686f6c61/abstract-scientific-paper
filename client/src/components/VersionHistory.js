@@ -41,7 +41,7 @@ const versionHistory = [
   {
     version: "V.07",
     title: "Descarga de datos",
-    date: "Febrero 2025",
+    date: "Marzo 2025",
     icon: <CloudDownloadIcon />,
     features: [
       "Exportación de resúmenes y artículos en formato Markdown",
@@ -52,7 +52,7 @@ const versionHistory = [
   {
     version: "V.06",
     title: "Funciones avanzadas de modelos",
-    date: "Febrero 2025",
+    date: "Marzo 2025",
     icon: <FunctionsIcon />,
     features: [
       "Control de parámetros avanzados: temperatura, max_tokens, top_p",
@@ -63,7 +63,7 @@ const versionHistory = [
   {
     version: "V.05",
     title: "Modelos avanzados",
-    date: "Enero 2025",
+    date: "Marzo 2025",
     icon: <AutoAwesomeIcon />,
     features: [
       "Integración con GPT-4o y GPT-4o-mini",
@@ -74,7 +74,7 @@ const versionHistory = [
   {
     version: "V.04",
     title: "Artículo de revisión científica",
-    date: "Enero 2025",
+    date: "Marzo 2025",
     icon: <DescriptionIcon />,
     features: [
       "Generación de artículos de revisión completos",
@@ -85,7 +85,7 @@ const versionHistory = [
   {
     version: "V.03",
     title: "Resumen estructurado",
-    date: "Diciembre 2024",
+    date: "Marzo 2025",
     icon: <SummarizeIcon />,
     features: [
       "Generación de resúmenes con estructura académica",
@@ -96,7 +96,7 @@ const versionHistory = [
   {
     version: "V.02",
     title: "Multi-PDF",
-    date: "Noviembre 2024",
+    date: "Marzo 2025",
     icon: <ArticleIcon />,
     features: [
       "Procesamiento de múltiples documentos PDF simultáneamente",
@@ -107,7 +107,7 @@ const versionHistory = [
   {
     version: "V.01",
     title: "Consulta sobre artículo",
-    date: "Octubre 2024",
+    date: "Marzo 2025",
     icon: <BuildIcon />,
     features: [
       "Primera versión con consultas contextuales",
