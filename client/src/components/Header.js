@@ -43,37 +43,38 @@ const Header = () => {
             <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
               (U)Boost scientific paper
             </Typography>
+            
+            <Stack direction="row" spacing={1} sx={{ ml: 3 }}>
+              <ApiKeysConfig />
+              <VersionHistory />
+              <Button 
+                color="inherit"
+                onClick={handleOpenFaqDialog}
+                aria-label="Preguntas Frecuentes"
+                sx={{ minWidth: 'auto', p: 1 }}
+              >
+                <HelpOutlineIcon />
+              </Button>
+              <Button 
+                color="inherit"
+                onClick={handleOpenLegalDialog}
+                aria-label="Aviso Legal"
+                sx={{ minWidth: 'auto', p: 1 }}
+              >
+                <GavelIcon />
+              </Button>
+            </Stack>
           </Box>
           
-          <Stack direction="row" spacing={1}>
-            <ApiKeysConfig />
-            <VersionHistory />
-            <Button 
-              color="inherit"
-              onClick={handleOpenFaqDialog}
-              aria-label="Preguntas Frecuentes"
-              sx={{ minWidth: 'auto', p: 1 }}
-            >
-              <HelpOutlineIcon />
-            </Button>
-            <Button 
-              color="inherit"
-              onClick={handleOpenLegalDialog}
-              aria-label="Aviso Legal"
-              sx={{ minWidth: 'auto', p: 1 }}
-            >
-              <GavelIcon />
-            </Button>
-            <Button 
-              color="inherit"
-              href="https://github.com/686f6c61/abstract-scientific-paper"
-              target="_blank"
-              aria-label="GitHub Repository"
-              sx={{ minWidth: 'auto', p: 1 }}
-            >
-              <GitHubIcon />
-            </Button>
-          </Stack>
+          <Button 
+            color="inherit"
+            href="https://github.com/686f6c61/abstract-scientific-paper"
+            target="_blank"
+            aria-label="GitHub Repository"
+            sx={{ minWidth: 'auto', p: 1 }}
+          >
+            <GitHubIcon />
+          </Button>
         </Toolbar>
       </AppBar>
 
