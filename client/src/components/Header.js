@@ -12,6 +12,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import TranslateIcon from '@mui/icons-material/Translate';
 
 import ApiKeysConfig from './ApiKeysConfig';
+import VersionHistory from './VersionHistory';
 
 const Header = () => {
   const [legalDialogOpen, setLegalDialogOpen] = useState(false);
@@ -46,6 +47,7 @@ const Header = () => {
           
           <Stack direction="row" spacing={1}>
             <ApiKeysConfig />
+            <VersionHistory />
             <Button 
               color="inherit"
               onClick={handleOpenFaqDialog}
