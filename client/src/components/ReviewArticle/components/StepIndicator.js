@@ -11,7 +11,7 @@ import {
  */
 const StepIndicator = ({ currentStep }) => {
   const steps = [
-    { number: 1, title: 'Paso 1', description: 'Selección de PDFs' },
+    { number: 1, title: 'Paso 1', description: 'Selección de Artículos' },
     { number: 2, title: 'Paso 2', description: 'Selección de Resúmenes' },
     { number: 3, title: 'Paso 3', description: 'Artículo Generado' }
   ];

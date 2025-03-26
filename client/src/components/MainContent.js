@@ -13,6 +13,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import PdfList from './PdfList';
 import FileUpload from './FileUpload';
 import QueryForm from './QueryForm';
@@ -88,8 +89,9 @@ const MainContent = () => {
         {/* Left Column - PDF Management */}
         <Grid item xs={12} md={3}>
           <Paper elevation={1} sx={{ p: 2, height: '100%' }}>
-            <Typography variant="h6" gutterBottom>
-              PDFs
+            <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <PictureAsPdfIcon fontSize="small" />
+              Artículos
             </Typography>
             <FileUpload />
             <PdfList />

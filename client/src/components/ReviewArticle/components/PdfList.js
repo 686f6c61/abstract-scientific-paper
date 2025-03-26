@@ -50,10 +50,10 @@ const PdfList = ({
         boxShadow: 1
       }}>
         <Typography variant="subtitle1" sx={{ fontWeight: 'medium', color: 'white', display: 'flex', alignItems: 'center' }}>
-          <PictureAsPdfIcon sx={{ mr: 1, fontSize: '1.2rem' }} /> PDFs disponibles
+          <PictureAsPdfIcon sx={{ mr: 1, fontSize: '1.2rem' }} /> Artículos
         </Typography>
         <Box sx={{ bgcolor: 'background.paper', color: 'primary.main', borderRadius: 4, px: 1.5, py: 0.3, fontWeight: 'medium', fontSize: '0.875rem' }}>
-          {pdfs.length} documento{pdfs.length !== 1 ? 's' : ''}
+          {pdfs.length} artículo{pdfs.length !== 1 ? 's' : ''}
         </Box>
       </Box>
       

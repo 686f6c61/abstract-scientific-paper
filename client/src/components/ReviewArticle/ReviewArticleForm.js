@@ -227,7 +227,7 @@ const ReviewArticleForm = () => {
         <Paper sx={{ p: 3, borderRadius: 2, boxShadow: 2, mb: 3 }}>
           {pdfs.length === 0 ? (
             <Alert severity="info" sx={{ mb: 2 }}>
-              <AlertTitle>No hay PDFs disponibles</AlertTitle>
+              <AlertTitle>No hay Artículos disponibles</AlertTitle>
               Sube algunos documentos PDF desde la sección principal para comenzar.
             </Alert>
           ) : (
@@ -339,7 +339,7 @@ const ReviewArticleForm = () => {
                   onClick={handleProcessBatch}
                   sx={getPrimaryButtonStyles(selectedPdfs.length === 0 || batchProcessing)}
                 >
-                  {batchProcessing ? 'Procesando...' : 'Procesar PDFs Seleccionados'}
+                  {batchProcessing ? 'Procesando...' : 'Procesar Artículos Seleccionados'}
                 </Button>
               </Box>
             </>
@@ -376,7 +376,7 @@ const ReviewArticleForm = () => {
                   onClick={() => setStep(1)}
                   sx={{ ...getPrimaryButtonStyles(), mr: 2 }}
                 >
-                  Volver a Selección de PDFs
+                  Volver a Selección de Artículos
                 </Button>
 
                 <Button

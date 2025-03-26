@@ -3,15 +3,22 @@ import {
   Button, 
   Box, 
   Typography,
-  Alert
+  Alert,
+  Stack
 } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import SelectAllIcon from '@mui/icons-material/SelectAll';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { usePdf } from '../contexts/PdfContext';
 
 const FileUpload = () => {
-  const { uploadPdf } = usePdf();
+  const { uploadPdf, selectAllPdfs } = usePdf();
   const [uploadError, setUploadError] = useState(null);
+  
+  const handleSelectAll = () => {
+    selectAllPdfs();
+  };
 
   const onDrop = useCallback(async (acceptedFiles) => {
     setUploadError(null);
@@ -49,42 +56,62 @@ const FileUpload = () => {
         </Alert>
       )}
       
-      <Box
-        {...getRootProps()}
-        sx={{
-          border: '2px dashed',
-          borderColor: isDragActive ? 'primary.main' : 'grey.300',
-          borderRadius: 1,
-          p: 2,
-          textAlign: 'center',
-          cursor: 'pointer',
-          bgcolor: isDragActive ? 'primary.light' : 'background.paper',
-          '&:hover': {
-            bgcolor: 'grey.50',
-            borderColor: 'primary.light',
-          },
-        }}
-      >
-        <input {...getInputProps()} />
-        <UploadFileIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />
-        <Typography variant="body2" color="text.secondary">
-          {isDragActive ? (
-            <span>Suelta el archivo aquí</span>
-          ) : (
-            <span>Arrastra un PDF aquí, o haz clic para seleccionarlo</span>
-          )}
-        </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+        <Box
+          {...getRootProps()}
+          sx={{
+            border: '2px dashed',
+            borderColor: isDragActive ? 'primary.main' : 'grey.300',
+            borderRadius: 1,
+            p: 2,
+            textAlign: 'center',
+            cursor: 'pointer',
+            bgcolor: isDragActive ? 'primary.light' : 'background.paper',
+            '&:hover': {
+              bgcolor: 'grey.50',
+              borderColor: 'primary.light',
+            },
+            width: '90%',
+            maxWidth: '500px'
+          }}
+        >
+          <input {...getInputProps()} />
+          <UploadFileIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />
+          <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5, flexWrap: 'wrap' }}>
+            {isDragActive ? (
+              <span>Suelta el archivo aquí</span>
+            ) : (
+              <>
+                <span>Arrastra un</span>
+                <PictureAsPdfIcon sx={{ fontSize: '1rem', color: 'primary.main', mx: 0.5 }} />
+                <span>Artículo aquí, o haz clic para seleccionarlo</span>
+              </>
+            )}
+          </Typography>
+        </Box>
       </Box>
       
-      <Button
-        variant="contained"
-        fullWidth
-        sx={{ mt: 2 }}
-        startIcon={<UploadFileIcon />}
-        {...getRootProps()}
-      >
-        Subir PDF
-      </Button>
+      <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{ mb: 1, maxWidth: '350px' }}
+          startIcon={<UploadFileIcon />}
+          {...getRootProps()}
+        >
+          Subir Artículo
+        </Button>
+        
+        <Button
+          variant="outlined"
+          fullWidth
+          sx={{ maxWidth: '350px' }}
+          startIcon={<SelectAllIcon />}
+          onClick={handleSelectAll}
+        >
+          Seleccionar todos
+        </Button>
+      </Box>
     </>
   );
 };

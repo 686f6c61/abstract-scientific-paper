@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, Stack, Box, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Stack, Box, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider, Link } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import GavelIcon from '@mui/icons-material/Gavel';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import SearchIcon from '@mui/icons-material/Search';
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import CodeIcon from '@mui/icons-material/Code';
+import SettingsIcon from '@mui/icons-material/Settings';
+import TranslateIcon from '@mui/icons-material/Translate';
 
 const Header = () => {
   const [legalDialogOpen, setLegalDialogOpen] = useState(false);
+  const [faqDialogOpen, setFaqDialogOpen] = useState(false);
 
   const handleOpenLegalDialog = () => {
     setLegalDialogOpen(true);
@@ -13,6 +21,14 @@ const Header = () => {
 
   const handleCloseLegalDialog = () => {
     setLegalDialogOpen(false);
+  };
+  
+  const handleOpenFaqDialog = () => {
+    setFaqDialogOpen(true);
+  };
+
+  const handleCloseFaqDialog = () => {
+    setFaqDialogOpen(false);
   };
 
   return (
@@ -27,6 +43,14 @@ const Header = () => {
           </Box>
           
           <Stack direction="row" spacing={1}>
+            <Button 
+              color="inherit"
+              onClick={handleOpenFaqDialog}
+              aria-label="Preguntas Frecuentes"
+              sx={{ minWidth: 'auto', p: 1 }}
+            >
+              <HelpOutlineIcon />
+            </Button>
             <Button 
               color="inherit"
               onClick={handleOpenLegalDialog}
@@ -150,6 +174,299 @@ const Header = () => {
         <DialogActions>
           <Button onClick={handleCloseLegalDialog} variant="contained" color="primary" sx={{ px: 4, py: 1 }}>
             He leído y acepto
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={faqDialogOpen}
+        onClose={handleCloseFaqDialog}
+        aria-labelledby="faq-dialog-title"
+        aria-describedby="faq-dialog-description"
+        maxWidth="lg"
+        fullWidth
+      >
+        <DialogTitle id="faq-dialog-title" sx={{ bgcolor: 'primary.main', color: 'white', fontWeight: 'bold' }}>
+          Guía de uso: (U)Boost scientific paper
+        </DialogTitle>
+        <DialogContent sx={{ mt: 2 }}>
+          <DialogContentText id="faq-dialog-description" component="div">
+            <Typography variant="subtitle1" gutterBottom sx={{ color: 'text.primary', fontWeight: 'medium' }}>
+              (U)Boost scientific paper es una herramienta integral diseñada para facilitar el trabajo con artículos científicos, ofreciendo tres funcionalidades principales adaptadas a diferentes necesidades de investigación.
+            </Typography>
+            
+            <Divider sx={{ my: 3 }} />
+            
+            {/* Sección 1: Inteligencia sobre Artículos */}
+            <Typography variant="h5" gutterBottom sx={{ color: 'primary.main', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1 }}>
+              <SearchIcon /> Inteligencia sobre artículos
+            </Typography>
+            <Typography paragraph>
+              Esta sección permite realizar consultas específicas sobre los artículos científicos seleccionados, funcionando como un asistente de investigación personalizado.
+            </Typography>
+            
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.dark', fontWeight: 'medium', ml: 2, mt: 2 }}>
+              ¿Qué ofrece?
+            </Typography>
+            <ul>
+              <li>
+                <Typography paragraph>
+                  <strong>Consultas ilimitadas:</strong> Puedes preguntar cualquier cosa sobre el contenido de los artículos seleccionados, desde metodologías específicas hasta hallazgos clave o comparativas entre diferentes papers.
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Información contextualizada:</strong> Las respuestas se generan basándose únicamente en el contenido de los documentos cargados, lo que garantiza que la información sea relevante y específica.
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Respuestas con referencias:</strong> El sistema proporciona referencias a las secciones específicas de los artículos donde se encuentra la información, facilitando la verificación y profundización.
+                </Typography>
+              </li>
+            </ul>
+            
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.dark', fontWeight: 'medium', ml: 2, mt: 2 }}>
+              Casos de uso ideales:
+            </Typography>
+            <ul>
+              <li>
+                <Typography paragraph>
+                  Extraer información específica de una colección de artículos sin tener que leerlos por completo
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  Verificar datos puntuales o metodologías descritas en los papers
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  Identificar patrones o tendencias entre diferentes publicaciones científicas
+                </Typography>
+              </li>
+            </ul>
+            
+            <Divider sx={{ my: 3 }} />
+            
+            {/* Sección 2: Resumen Estructurado */}
+            <Typography variant="h5" gutterBottom sx={{ color: 'primary.main', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1 }}>
+              <SummarizeIcon /> Resumen estructurado
+            </Typography>
+            <Typography paragraph>
+              Esta funcionalidad genera resúmenes comprensivos y estructurados de artículos científicos, organizados en secciones predefinidas para facilitar su comprensión y análisis.
+            </Typography>
+            
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.dark', fontWeight: 'medium', ml: 2, mt: 2 }}>
+              Estructura del resumen:
+            </Typography>
+            <ul>
+              <li>
+                <Typography paragraph>
+                  <strong>Información general:</strong> Título, autores, fecha de publicación y revista/conferencia
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Objetivos:</strong> Metas principales y preguntas de investigación abordadas
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Metodología:</strong> Diseño experimental, técnicas empleadas y procedimientos
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Resultados principales:</strong> Hallazgos clave, datos relevantes y observaciones importantes
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Conclusiones:</strong> Interpretaciones, implicaciones y relevancia del estudio
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Limitaciones:</strong> Restricciones metodológicas o conceptuales identificadas
+                </Typography>
+              </li>
+            </ul>
+            
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.dark', fontWeight: 'medium', ml: 2, mt: 2 }}>
+              Beneficios principales:
+            </Typography>
+            <ul>
+              <li>
+                <Typography paragraph>
+                  Ahorro significativo de tiempo en la revisión de literatura científica
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  Formato consistente que facilita la comparación entre diferentes estudios
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  Identificación rápida de los aspectos más relevantes de cada publicación
+                </Typography>
+              </li>
+            </ul>
+            
+            <Divider sx={{ my: 3 }} />
+            
+            {/* Sección 3: Artículo de Revisión Científica */}
+            <Typography variant="h5" gutterBottom sx={{ color: 'primary.main', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1 }}>
+              <MenuBookIcon /> Artículo de revisión científica
+            </Typography>
+            <Typography paragraph>
+              Esta herramienta avanzada permite sintetizar múltiples artículos científicos en un documento de revisión cohesivo y estructurado, ideal para iniciar investigaciones o crear estados del arte.
+            </Typography>
+            
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.dark', fontWeight: 'medium', ml: 2, mt: 2 }}>
+              El proceso consta de tres pasos:
+            </Typography>
+            <ol>
+              <li>
+                <Typography paragraph>
+                  <strong>Selección de artículos:</strong> Elige los documentos que deseas incluir en tu revisión
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Selección de resúmenes:</strong> Revisa y selecciona los resúmenes generados automáticamente
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Generación del artículo:</strong> El sistema crea un documento de revisión completo que integra y analiza todos los resúmenes seleccionados
+                </Typography>
+              </li>
+            </ol>
+            
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.dark', fontWeight: 'medium', ml: 2, mt: 2 }}>
+              Estructura del artículo de revisión:
+            </Typography>
+            <ul>
+              <li>
+                <Typography paragraph>
+                  <strong>Introducción:</strong> Contexto, relevancia y objetivos de la revisión
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Marco teórico:</strong> Fundamentos conceptuales y teóricos relevantes
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Metodología:</strong> Estrategia de búsqueda y criterios de selección de estudios
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Datos y resultados:</strong> Síntesis organizada de los hallazgos principales
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Discusión y conclusiones:</strong> Interpretación crítica y conclusiones generales
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Evaluación global:</strong> Valoración crítica de la evidencia colectiva
+                </Typography>
+              </li>
+            </ul>
+            
+            <Divider sx={{ my: 3 }} />
+            
+            {/* Sección 4: Características Avanzadas */}
+            <Typography variant="h5" gutterBottom sx={{ color: 'primary.main', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1 }}>
+              <SettingsIcon /> Características avanzadas
+            </Typography>
+            
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.dark', fontWeight: 'medium', ml: 2, mt: 2 }}>
+              Selección de modelos de IA:
+            </Typography>
+            <ul>
+              <li>
+                <Typography paragraph>
+                  <strong>GPT-4o-mini (Rápido):</strong> Óptimo para consultas simples y resúmenes básicos, con tiempos de respuesta más rápidos y menor consumo de tokens.
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>GPT-4o (Avanzado):</strong> Recomendado para análisis complejos y artículos de revisión más detallados, con mayor precisión y profundidad.
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Claude 3.7 Sonnet:</strong> Especializado en síntesis de información científica, con capacidad para manejar estructuras complejas y generar contenido bien organizado.
+                </Typography>
+              </li>
+            </ul>
+            
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.dark', fontWeight: 'medium', ml: 2, mt: 2 }}>
+              Opciones de configuración:
+            </Typography>
+            <ul>
+              <li>
+                <Typography paragraph>
+                  <strong>Temperatura:</strong> Controla el nivel de creatividad y variabilidad en las respuestas generadas
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Tokens máximos:</strong> Ajusta la extensión de las respuestas según tus necesidades
+                </Typography>
+              </li>
+              <li>
+                <Typography paragraph>
+                  <strong>Campo de instrucciones específicas:</strong> Permite personalizar las directrices para la generación de contenido
+                </Typography>
+              </li>
+            </ul>
+            
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.dark', fontWeight: 'medium', ml: 2, mt: 2 }}>
+              <TranslateIcon sx={{ mr: 1, fontSize: '1rem', verticalAlign: 'middle' }} />
+              Soporte multilingüe:
+            </Typography>
+            <Typography paragraph sx={{ ml: 2 }}>
+              Genera respuestas y documentos en múltiples idiomas: Español, English, Français, Deutsch, Italiano, Português.
+            </Typography>
+            
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.dark', fontWeight: 'medium', ml: 2, mt: 2 }}>
+              <CodeIcon sx={{ mr: 1, fontSize: '1rem', verticalAlign: 'middle' }} />
+              Información de tokens y costes:
+            </Typography>
+            <Typography paragraph sx={{ ml: 2 }}>
+              Monitoriza el uso de tokens y costes estimados para gestionar eficientemente tus recursos.
+            </Typography>
+            
+            <Divider sx={{ my: 3 }} />
+            
+            <Box sx={{ bgcolor: 'primary.light', p: 2, borderRadius: 2, color: 'primary.contrastText' }}>
+              <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold' }}>
+                Optimiza tu experiencia:
+              </Typography>
+              <Typography paragraph>
+                Para obtener los mejores resultados, recomendamos utilizar documentos PDF bien estructurados, formular preguntas específicas y experimentar con diferentes modelos según la complejidad de tu tarea.
+              </Typography>
+              <Typography>
+                Si necesitas más información, consulta nuestra 
+                <Link href="https://github.com/686f6c61/abstract-scientific-paper" target="_blank" sx={{ color: 'white', fontWeight: 'bold', textDecoration: 'underline' }}>
+                  documentación completa en GitHub
+                </Link>.
+              </Typography>
+            </Box>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseFaqDialog} color="primary" variant="contained">
+            Entendido
           </Button>
         </DialogActions>
       </Dialog>
