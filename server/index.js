@@ -11,6 +11,7 @@ const pdfRoutes = require('./routes/pdf.routes');
 const openaiRoutes = require('./routes/openai.routes');
 const anthropicRoutes = require('./routes/anthropic.routes');
 const deepseekRoutes = require('./routes/deepseek.routes');
+const configRoutes = require('./routes/config.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -35,6 +36,7 @@ app.use('/api/pdf', pdfRoutes);
 app.use('/api/openai', openaiRoutes);
 app.use('/api/anthropic', anthropicRoutes);
 app.use('/api/deepseek', deepseekRoutes);
+app.use('/api/config', configRoutes);
 
 // Serve uploads for development
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

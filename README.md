@@ -24,6 +24,12 @@
 
 ## 🔥 Características principales
 
+- 🔑 **Configuración sencilla de API Keys**
+  - Interfaz gráfica para configurar tus claves API de OpenAI y Anthropic.
+  - Validación en tiempo real de las claves ingresadas.
+  - Indicador visual del estado de configuración.
+  - Instrucciones paso a paso para obtener las claves.
+
 - 📚 **Gestión avanzada de PDFs**
   - Carga rápida y sencilla de documentos PDF.
   - Visualización de documentos subidos.
@@ -119,6 +125,22 @@ Crear archivo `.env` en `/server` basado en `.env.example`:
 OPENAI_API_KEY=sk-...
 ANTHROPIC_API_KEY=sk-ant-...
 ```
+
+> **Nota**: Las API Keys también pueden configurarse directamente desde la interfaz gráfica de la aplicación usando el botón de configuración en la barra superior.
+
+### 🔑 Obtención de API Keys
+
+#### OpenAI API Key (para GPT-4o y GPT-4o-mini)
+1. Crea una cuenta en [OpenAI Platform](https://platform.openai.com/signup)
+2. Ve a la sección de [API Keys](https://platform.openai.com/api-keys)
+3. Haz clic en "Create new API key"
+4. Copia la API key generada (comienza con "sk-")
+
+#### Anthropic API Key (para Claude 3.7 Sonnet)
+1. Crea una cuenta en [Anthropic Console](https://console.anthropic.com/signup)
+2. Ve a la sección de [API Keys](https://console.anthropic.com/account/keys)
+3. Haz clic en "Create key"
+4. Copia la API key generada (comienza con "sk-ant-")
 
 ### ▶️ Ejecución de la aplicación
 ```bash

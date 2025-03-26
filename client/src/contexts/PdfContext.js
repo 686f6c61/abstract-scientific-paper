@@ -110,6 +110,17 @@ export const PdfContextProvider = ({ children }) => {
     });
   };
   
+  // Select or deselect all PDFs
+  const selectAllPdfs = () => {
+    // Si todos los PDFs ya están seleccionados, deseleccionar todos
+    if (pdfs.length > 0 && pdfs.length === selectedPdfs.length) {
+      setSelectedPdfs([]);
+    } else {
+      // Seleccionar todos los PDFs
+      setSelectedPdfs(pdfs.map(pdf => pdf.id));
+    }
+  };
+  
   // Generar un título legible para un PDF
   const getReadableTitle = (pdf) => {
     if (!pdf) return '';
@@ -622,6 +633,7 @@ export const PdfContextProvider = ({ children }) => {
       uploadPdf,
       deletePdf,
       togglePdfSelection,
+      selectAllPdfs,
       setSearchQuery,
       processQuery,
       generateSummary,
